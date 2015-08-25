@@ -5,7 +5,13 @@ import os
 class Parser(object):
     def __init__(self):
         self.ideal = 20.0
-        self.stop_words = self.get_stop_words()
+        self.stop_words = self._get_stop_words()
+
+    def _get_stop_words(self):
+        with open(os.path.dirname(os.path.abspath(__file__)) + '/trainer/stop_words.txt') as file:
+            words = file.readlines()
+
+        return [word.replace('\n', '') for word in words]
 
     def get_keywords(self, text):
         text = self.remove_punctations(text)
@@ -66,10 +72,4 @@ class Parser(object):
 
     def remove_stop_words(self, words):
         return [word for word in words if word not in self.stop_words]
-
-    def get_stop_words(self):
-        with open(os.path.dirname(os.path.abspath(__file__)) + '/trainer/stop_words.txt') as file:
-            words = file.readlines()
-
-        return [word.replace('\n', '') for word in words]
 
