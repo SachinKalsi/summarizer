@@ -1,31 +1,29 @@
-# !/usr/bin/python
 # -*- coding: utf-8 -*-
 import nltk.data
 import os
 
-
-class Parser:
+class Parser(object):
     def __init__(self):
         self.ideal = 20.0
-        self.stopWords = self.getStopWords()
+        self.stop_words = self.get_stop_words()
 
-    def getKeywords(self, text):
-        text = self.removePunctations(text)
-        words = self.splitWords(text)
-        words = self.removeStopWords(words)
-        uniqueWords = list(set(words))
+    def get_keywords(self, text):
+        text = self.remove_punctations(text)
+        words = self.split_words(text)
+        words = self.remove_stop_words(words)
+        unique_words = list(set(words))
 
-        keywords = [{'word': word, 'count': words.count(word)} for word in uniqueWords]
+        keywords = [{'word': word, 'count': words.count(word)} for word in unique_words]
         keywords = sorted(keywords, key=lambda x: -x['count'])
 
         return (keywords, len(words))
 
-    def getSentenceLengthScore(self, sentence):
+    def get_sentence_length_score(self, sentence):
         return (self.ideal - abs(self.ideal - len(sentence))) / self.ideal
 
     # Jagadeesh, J., Pingali, P., & Varma, V. (2005). Sentence Extraction Based Single Document Summarization. International Institute of Information Technology, Hyderabad, India, 5.
-    def getSentencePositionScore(self, i, sentenceCount):
-        normalized = i / (sentenceCount * 1.0)
+    def get_sentence_position_score(self, i, sentence_count):
+        normalized = i / (sentence_count * 1.0)
 
         if normalized > 0 and normalized <= 0.1:
             return 0.17
@@ -50,29 +48,28 @@ class Parser:
         else:
             return 0
 
-    def getTitleScore(self, title, sentence):
-        titleWords = self.removeStopWords(title)
-        sentenceWords = self.removeStopWords(sentence)
-        matchedWords = [word for word in sentenceWords if word in titleWords]
+    def get_title_score(self, title, sentence):
+        title_words = self.remove_stop_words(title)
+        sentence_words = self.remove_stop_words(sentence)
+        matched_words = [word for word in sentence_words if word in title_words]
+        return len(matched_words) / (len(title) * 1.0)
 
-        return len(matchedWords) / (len(title) * 1.0)
-
-    def splitSentences(self, text):
+    def split_sentences(self, text):
         tokenizer = nltk.data.load('file:' + os.path.dirname(os.path.abspath(__file__)) + '/trainer/english.pickle')
-
         return tokenizer.tokenize(text)
 
-    def splitWords(self, sentence):
+    def split_words(self, sentence):
         return sentence.lower().split()
 
-    def removePunctations(self, text):
+    def remove_punctations(self, text):
         return ''.join(t for t in text if t.isalnum() or t == ' ')
 
-    def removeStopWords(self, words):
-        return [word for word in words if word not in self.stopWords]
+    def remove_stop_words(self, words):
+        return [word for word in words if word not in self.stop_words]
 
-    def getStopWords(self):
-        with open(os.path.dirname(os.path.abspath(__file__)) + '/trainer/stopWords.txt') as file:
+    def get_stop_words(self):
+        with open(os.path.dirname(os.path.abspath(__file__)) + '/trainer/stop_words.txt') as file:
             words = file.readlines()
 
         return [word.replace('\n', '') for word in words]
+
