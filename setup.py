@@ -18,6 +18,8 @@ with open('README.md', 'r') as fp:
     readme = fp.read()
 with open('CHANGES.md', 'r') as fp:
     changes = fp.read()
+with open('LICENSE.md', 'r') as fp:
+    license = fp.read()
 
 setup(
     name='summarizer',
@@ -28,10 +30,10 @@ setup(
     author_email='neurosnap@gmail.com',
     url='https://github.com/michigan-com/summarizer',
     packages=find_packages(),
-    package_data={},
+    package_data={'summarizer': ['trainer/*.txt', 'trainer/*.pickle']},
     include_package_data=True,
     install_requires=['nltk'],
-    license='MIT',
+    license=license,
     classifiers=(
         'Development Status :: 3 - Alpha',
         'Environment :: Console',

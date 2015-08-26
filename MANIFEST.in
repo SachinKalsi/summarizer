@@ -1,0 +1,2 @@
+include *.md *.txt *.pickle
+recursive-include summarizer/data *.txt *.pickle
