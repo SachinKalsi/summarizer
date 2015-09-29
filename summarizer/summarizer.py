@@ -2,8 +2,11 @@
 from .parser import Parser
 
 class Summarizer(object):
-    def __init__(self):
-        self.parser = Parser()
+    def __init__(self, parser=None):
+        if not parser:
+            parser = Parser()
+
+        self.parser = parser
 
     def get_summary(self, text, title):
         sentences = self.parser.split_sentences(text)

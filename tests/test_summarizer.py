@@ -5,6 +5,7 @@ import unittest
 from summarizer import summarize
 
 _dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
+num_sentences = 5
 
 def _read_expected_summary(fname, _dir=_dir):
     expected_summary = None
@@ -48,21 +49,21 @@ class TestSummaries(unittest.TestCase):
 
     def test_autotech_summary(self):
         expected_summary = _read_expected_summary('autotech_s.txt')
-        actual_summary = summarize(self.autotech['title'], self.autotech['text'])
+        actual_summary = summarize(self.autotech['title'], self.autotech['text'], count=num_sentences)
 
         for actual, expected in zip(actual_summary, expected_summary):
             self.assertEqual(actual.replace('\n', ''), _clean_sentence(expected))
 
     def test_misty_summary(self):
         expected_summary = _read_expected_summary('misty_s.txt')
-        actual_summary = summarize(self.misty['title'], self.misty['text'])
+        actual_summary = summarize(self.misty['title'], self.misty['text'], count=num_sentences)
 
         for actual, expected in zip(actual_summary, expected_summary):
             self.assertEqual(actual.replace('\n', ''), _clean_sentence(expected))
 
     def test_morouns_summary(self):
         expected_summary = _read_expected_summary('morouns_s.txt')
-        actual_summary = summarize(self.morouns['title'], self.morouns['text'])
+        actual_summary = summarize(self.morouns['title'], self.morouns['text'], count=num_sentences)
 
         for actual, expected in zip(actual_summary, expected_summary):
             self.assertEqual(actual.replace('\n', ''), _clean_sentence(expected))

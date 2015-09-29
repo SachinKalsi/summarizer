@@ -3,9 +3,16 @@ import nltk.data
 import os
 
 class Parser(object):
-    def __init__(self):
+    def __init__(self, ideal=20.0, stop_words=None, tokenizer=None):
         self.ideal = 20.0
-        self.stop_words = self._get_stop_words()
+        if not stop_words:
+            stop_words = self._get_stop_words()
+        self.stop_words = stop_words
+
+        if not tokenizer:
+            fname = 'file:' + os.path.dirname(os.path.abspath(__file__)) + '/trainer/english.pickle'
+            tokenizer = nltk.data.load(fname)
+        self.tokenizer = tokenizer
 
     def _get_stop_words(self):
         with open(os.path.dirname(os.path.abspath(__file__)) + '/trainer/stop_words.txt') as file:
@@ -61,8 +68,13 @@ class Parser(object):
         return len(matched_words) / (len(title) * 1.0)
 
     def split_sentences(self, text):
-        tokenizer = nltk.data.load('file:' + os.path.dirname(os.path.abspath(__file__)) + '/trainer/english.pickle')
-        return tokenizer.tokenize(text)
+        return self.tokenizer.tokenize(text)
+
+    def tokens(self, text):
+        """ Get a list of annotated tokens instead of a list of sentences """
+        tokens = self.tokenizer._tokenize_words(text)
+        annotated_tokens = self.tokenizer._annotate_tokens(tokens)
+        return annotated_tokens
 
     def split_words(self, sentence):
         return sentence.lower().split()
