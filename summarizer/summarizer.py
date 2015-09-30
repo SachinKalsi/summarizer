@@ -9,9 +9,9 @@ class Summarizer(object):
         self.parser = parser
 
     def get_summary(self, text, title):
-        sentences = self.parser.split_sentences(text)
+        sentences = self.parser.sentences(text)
         title_words = self.parser.remove_punctations(title)
-        title_words = self.parser.split_words(title)
+        title_words = self.parser.words(title)
         (keywords, word_count) = self.parser.get_keywords(text)
 
         top_keywords = self.get_top_keywords(keywords[:10], word_count)
@@ -41,7 +41,7 @@ class Summarizer(object):
 
         for i, sentence in enumerate(sentences):
             sent = self.parser.remove_punctations(sentence)
-            words = self.parser.split_words(sent)
+            words = self.parser.words(sent)
 
             sbs_feature = self._sbs(words, top_keywords, keyword_list)
             dbs_feature = self._dbs(words, top_keywords, keyword_list)

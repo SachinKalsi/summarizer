@@ -1,6 +1,13 @@
 # -*- coding: utf-8 -*-
-import nltk.data
 import os
+import json
+from collections import defaultdict
+
+#import nltk.data
+from nltk.tokenize import punkt
+
+class SentenceTokenizer(punkt.PunktSentenceTokenizer):
+    pass
 
 class Parser(object):
     def __init__(self, ideal=20.0, stop_words=None, tokenizer=None):
@@ -10,9 +17,35 @@ class Parser(object):
         self.stop_words = stop_words
 
         if not tokenizer:
-            fname = 'file:' + os.path.dirname(os.path.abspath(__file__)) + '/trainer/english.pickle'
-            tokenizer = nltk.data.load(fname)
+            fname = os.path.dirname(os.path.abspath(__file__)) + '/trainer/english.json'
+            with open(fname, 'r') as fp:
+                data = json.load(fp)
+
+            self.training = self.load_training(
+                set(data['AbbrevTypes']),
+                set(data['Collocations']),
+                set(data['SentStarters']),
+                defaultdict(int, data['OrthoContext'])
+            )
+
+            tokenizer = SentenceTokenizer()
+            tokenizer._params = self.training
+
+            #fname = 'file:' + os.path.dirname(os.path.abspath(__file__)) + '/trainer/english.pickle'
+            #old_tokenizer = nltk.data.load(fname)
+            #print(old_tokenizer._params.ortho_context)
         self.tokenizer = tokenizer
+
+    def load_training(self, abbrev_types, collocations, sent_starters, ortho_context):
+        """ Manually supply training data instead of using nltk's default pickle.
+        This will allow us to extend PunktSentenceTokenizer to fix its warts or
+        add data to our training data. """
+        training = punkt.PunktParameters()
+        training.abbrev_types = abbrev_types
+        training.collocations = collocations
+        training.sent_starters = sent_starters
+        training.ortho_context = ortho_context
+        return training
 
     def _get_stop_words(self):
         with open(os.path.dirname(os.path.abspath(__file__)) + '/trainer/stop_words.txt') as file:
@@ -22,7 +55,7 @@ class Parser(object):
 
     def get_keywords(self, text):
         text = self.remove_punctations(text)
-        words = self.split_words(text)
+        words = self.words(text)
         words = self.remove_stop_words(words)
         unique_words = list(set(words))
 
@@ -67,7 +100,7 @@ class Parser(object):
         matched_words = [word for word in sentence_words if word in title_words]
         return len(matched_words) / (len(title) * 1.0)
 
-    def split_sentences(self, text):
+    def sentences(self, text):
         return self.tokenizer.tokenize(text)
 
     def tokens(self, text):
@@ -76,7 +109,7 @@ class Parser(object):
         annotated_tokens = self.tokenizer._annotate_tokens(tokens)
         return annotated_tokens
 
-    def split_words(self, sentence):
+    def words(self, sentence):
         return sentence.lower().split()
 
     def remove_punctations(self, text):
