@@ -7,7 +7,32 @@ from collections import defaultdict
 from nltk.tokenize import punkt
 
 class SentenceTokenizer(punkt.PunktSentenceTokenizer):
-    pass
+    """ Extend the nltk's punkt sentence tokenizer """
+    def _annotate_tokens(self, tokens):
+        """ Given a set of tokens augmented with markers for line-start and
+        paragraph-start, returns an iterator through those tokens with full
+        annotation including predicted sentence breaks. """
+        # Make a preliminary pass through the document, marking likely
+        # sentence breaks, abbreviations, and ellipsis tokens.
+        tokens = self._annotate_first_pass(tokens)
+
+        # Make a second pass through the document, using token context
+        # information to change our preliminary decisions about where
+        # sentence breaks, abbreviations, and ellipsis occurs.
+        tokens = self._annotate_second_pass(tokens)
+
+        tokens = self.annotate_multi_punct_words(tokens)
+
+        return tokens
+
+    def annotate_multi_punct_words(self, tokens):
+        """ Detect abbreviations with multiple periods and mark them as abbreviations.
+        Basically punkt is failing to count custom abbreviations, like F.B.I.,
+        when it is not in the training data, even though they are relatively simple
+        to tease out, especially when mixing it with ortho heuristics to detect
+        the likelyhood of it being a sentence starter as well an abbreviation."""
+        for token in tokens:
+            yield token
 
 class Parser(object):
     def __init__(self, ideal=20.0, stop_words=None, tokenizer=None):
