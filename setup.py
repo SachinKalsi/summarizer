@@ -30,7 +30,7 @@ setup(
     author_email='neurosnap@gmail.com',
     url='https://github.com/michigan-com/summarizer',
     packages=find_packages(),
-    package_data={'summarizer': ['trainer/*.txt', 'trainer/*.pickle']},
+    package_data={'summarizer': ['trainer/*.txt', 'trainer/*.json']},
     include_package_data=True,
     install_requires=['nltk'],
     license=license,
