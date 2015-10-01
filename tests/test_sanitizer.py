@@ -27,4 +27,6 @@ class TestSanitizer(unittest.TestCase):
                 lines = fp.readlines()
                 expected_text = _u(fp.readlines())
 
+if __name__ == '__main__':
+    unittest.run(verbosity=2)
 

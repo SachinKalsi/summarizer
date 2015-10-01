@@ -49,21 +49,21 @@ class TestSummaries(unittest.TestCase):
 
     def test_autotech_summary(self):
         expected_summary = _read_expected_summary('autotech_s.txt')
-        actual_summary = summarize(self.autotech['title'], self.autotech['text'], count=num_sentences)
+        actual_summary = summarize(self.autotech['title'], self.autotech['text'])
 
         for actual, expected in zip(actual_summary, expected_summary):
             self.assertEqual(actual.replace('\n', ''), _clean_sentence(expected))
 
     def test_misty_summary(self):
         expected_summary = _read_expected_summary('misty_s.txt')
-        actual_summary = summarize(self.misty['title'], self.misty['text'], count=num_sentences)
+        actual_summary = summarize(self.misty['title'], self.misty['text'])
 
         for actual, expected in zip(actual_summary, expected_summary):
             self.assertEqual(actual.replace('\n', ''), _clean_sentence(expected))
 
     def test_morouns_summary(self):
         expected_summary = _read_expected_summary('morouns_s.txt')
-        actual_summary = summarize(self.morouns['title'], self.morouns['text'], count=num_sentences)
+        actual_summary = summarize(self.morouns['title'], self.morouns['text'])
 
         for actual, expected in zip(actual_summary, expected_summary):
             self.assertEqual(actual.replace('\n', ''), _clean_sentence(expected))

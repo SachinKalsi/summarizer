@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 from .parser import Parser
 from .summarizer import Summarizer
+from .sanitizer import sanitize
 
 __version__ = '0.0.4'
 
-def summarize(title, text, count=3, summarizer=None):
+def summarize(title, text, count=3, sanitize=False, summarizer=None):
+    if sanitize:
+        text = sanitize(text)
+
     if not summarizer:
         summarizer = Summarizer()
 

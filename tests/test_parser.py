@@ -3,7 +3,7 @@ import os
 import unittest
 import requests
 
-from summarizer import Parser
+from summarizer import Parser, sanitize
 
 _dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
 
@@ -21,7 +21,9 @@ class TestSentences(unittest.TestCase):
             r = requests.get('https://api.michigan.com/v1/article/' + str(article['article_id']))
             r.raise_for_status()
             art_jso = r.json()
+
             body = art_jso['body']
+            body = sanitize(body)
 
             actual_sentences = self.parser.sentences(body)
             expected_sentences = article['sentences']
@@ -63,5 +65,8 @@ class TestSentences(unittest.TestCase):
 
         for actual, expected in zip(actual_sentences, expected_sentences):
             self.assertEqual(actual, expected)
+
+if __name__ == '__main__':
+    unittest.run(verbosity=2)
 
 
