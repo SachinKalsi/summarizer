@@ -35,13 +35,13 @@ setup(
     install_requires=['nltk'],
     license=license,
     classifiers=(
-        'Development Status :: 3 - Alpha',
-        'Environment :: Console',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Natural Language :: English',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Topic :: Text Editors :: Text Processing'
-    )
+        b'Development Status :: 3 - Alpha',
+        b'Environment :: Console',
+        b'Intended Audience :: Developers',
+        b'License :: OSI Approved :: MIT License',
+        b'Natural Language :: English',
+        b'Programming Language :: Python :: 2.7',
+        b'Programming Language :: Python :: 3.4',
+        b'Topic :: Text Editors :: Text Processing',
+    ),
 )
