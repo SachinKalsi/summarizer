@@ -2,7 +2,7 @@
 from .parser import Parser
 from .summarizer import Summarizer
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 def summarize(title, text, count=3, summarizer=None):
     if not summarizer:
