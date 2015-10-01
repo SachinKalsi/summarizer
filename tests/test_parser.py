@@ -66,6 +66,23 @@ class TestSentences(unittest.TestCase):
         for actual, expected in zip(actual_sentences, expected_sentences):
             self.assertEqual(actual, expected)
 
+    def test_special_quote_period_sentence_enders(self):
+        text = """“I’m guilty.” Another man, Jasin Curtis, 19, also pleaded guilty and was sentenced in June to 27-40 years for robbery and murder.  'Do you get it?'  I don't think you do."""
+
+        expected_sentences = [
+            "“I’m guilty.”",
+            "Another man, Jasin Curtis, 19, also pleaded guilty and was sentenced in June to 27-40 years for robbery and murder.",
+            "'Do you get it?'",
+            "I don't think you do.",
+        ]
+
+        actual_sentences = self.parser.sentences(text)
+
+        self.assertEqual(len(actual_sentences), len(expected_sentences))
+
+        for actual, expected in zip(actual_sentences, expected_sentences):
+            self.assertEqual(actual, expected)
+
 if __name__ == '__main__':
     unittest.run(verbosity=2)
 

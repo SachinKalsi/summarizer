@@ -7,9 +7,26 @@ from collections import defaultdict
 #import nltk.data
 from nltk.tokenize import punkt
 
+class Language(punkt.PunktLanguageVars):
+    re_boundary_realignment = re.compile(r'["“”\')\]}]+?(?:\s+|(?=--)|$)', re.MULTILINE)
+    """Used to realign punctuation that should be included in a sentence
+    although it follows the period (or ?, !)."""
+
+    _re_word_start    = r"[^\(\"“”\`{\[:;&\#\*@\)}\]\-,]"
+    """Excludes some characters from starting word tokens"""
+
+    _re_non_word_chars   = r"(?:[?!)\"“”;}\]\*:@\'\({\[])"
+    """Characters that cannot appear within words"""
+
 class SentenceTokenizer(punkt.PunktSentenceTokenizer):
     """ Extend the nltk's punkt sentence tokenizer """
-    _reAbbr = re.compile('((?:[\w]\.)+[\w]*\.)')
+    _re_abbr = re.compile('((?:[\w]\.)+[\w]*\.)')
+
+    def __init__(self, lang_vars=None, *args, **kwargs):
+        if lang_vars is None:
+            lang_vars = Language()
+        punkt.PunktSentenceTokenizer.__init__(self, lang_vars=lang_vars, *args, **kwargs)
+
     def _annotate_tokens(self, tokens):
         """ Given a set of tokens augmented with markers for line-start and
         paragraph-start, returns an iterator through those tokens with full
@@ -34,7 +51,7 @@ class SentenceTokenizer(punkt.PunktSentenceTokenizer):
         to tease out, especially when mixing it with ortho heuristics to detect
         the likelyhood of it being a sentence starter as well an abbreviation."""
         for aug_tok1, aug_tok2 in punkt._pair_iter(tokens):
-            if self._reAbbr.search(aug_tok1.tok) is None:
+            if self._re_abbr.search(aug_tok1.tok) is None:
                 yield aug_tok1
                 continue
 
