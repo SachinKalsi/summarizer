@@ -8,7 +8,7 @@ def sanitize(text):
 
 def remove_dateline(text):
     """ This will remove the dateline from the beginning of the text. """
-    dashes = ["—", "--"]
+    dashes = [u"—", u"--"]
     truncate = text[:50]
 
     dateline = -1

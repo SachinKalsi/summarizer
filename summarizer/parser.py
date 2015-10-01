@@ -4,23 +4,24 @@ import re
 import json
 from collections import defaultdict
 
+import six
 #import nltk.data
 from nltk.tokenize import punkt
 
 class Language(punkt.PunktLanguageVars):
-    re_boundary_realignment = re.compile(r'["“”\')\]}]+?(?:\s+|(?=--)|$)', re.MULTILINE)
     """Used to realign punctuation that should be included in a sentence
     although it follows the period (or ?, !)."""
+    re_boundary_realignment = re.compile(six.u(r'["“”\')\]}]+?(?:\s+|(?=--)|$)'), re.MULTILINE)
 
-    _re_word_start    = r"[^\(\"“”\`{\[:;&\#\*@\)}\]\-,]"
     """Excludes some characters from starting word tokens"""
+    _re_word_start    = six.u(r"[^\(\"“”\`{\[:;&\#\*@\)}\]\-,]")
 
-    _re_non_word_chars   = r"(?:[?!)\"“”;}\]\*:@\'\({\[])"
     """Characters that cannot appear within words"""
+    _re_non_word_chars   = six.u(r"(?:[?!)\"“”;}\]\*:@\'\({\[])")
 
 class SentenceTokenizer(punkt.PunktSentenceTokenizer):
     """ Extend the nltk's punkt sentence tokenizer """
-    _re_abbr = re.compile('((?:[\w]\.)+[\w]*\.)')
+    _re_abbr = re.compile(six.u('((?:[\w]\.)+[\w]*\.)'))
 
     def __init__(self, lang_vars=None, *args, **kwargs):
         if lang_vars is None:

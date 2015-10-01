@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import six
 import unittest
 
 from summarizer import summarize
@@ -19,7 +20,7 @@ def _clean_sentence(s):
 def _u(s):
     _str = s
     try:
-        _str = _str.decode('utf-8', 'ignore')
+        _str = _str.decode('utf-8')
     except AttributeError:
         pass
     return _str
