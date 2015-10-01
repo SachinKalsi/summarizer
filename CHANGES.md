@@ -1,6 +1,17 @@
 CHANGES
 =======
 
+v0.0.5 10-01-2015
+-----------------
+
+* [FIX] Python2.7 unicode errors
+* Updated PunktLanguageVars to detect special quotation marks
+
+v0.0.4 10-01-2015
+-----------------
+
+* [FIX] PYPI didn't pick up the new training data in JSON format
+
 v0.0.3 10-01-2015
 -----------------
 

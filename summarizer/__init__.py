@@ -3,7 +3,7 @@ from .parser import Parser
 from .summarizer import Summarizer
 from .sanitizer import sanitize
 
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 
 def summarize(title, text, count=3, sanitize=False, summarizer=None):
     if sanitize:
