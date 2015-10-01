@@ -5,7 +5,7 @@ import unittest
 from summarizer import summarize
 
 _dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
-num_sentences = 5
+num_sentences = 3
 
 def _read_expected_summary(fname, _dir=_dir):
     expected_summary = None
