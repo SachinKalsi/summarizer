@@ -34,6 +34,10 @@ Summarizer.summarize(title, text, count=5, summarizer=Summarizer())
 * count: The number of summarized sentences to return
 * summarizer: The class instance that will do all the work
 
+Sanitizer module helps remove common oddities from the body of text.
+
+Sanitizer.sanitize(text)
+
 Contributing
 ------------
 
