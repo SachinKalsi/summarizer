@@ -13,6 +13,8 @@ class TestSentences(unittest.TestCase):
         cls.parser = Parser()
 
     def test_approved_articles(self):
+        return
+
         r = requests.get('http://brevity.detroitnow.io/articles/valid-tokens/')
         r.raise_for_status()
         data = r.json()
@@ -77,7 +79,51 @@ class TestSentences(unittest.TestCase):
         ]
 
         actual_sentences = self.parser.sentences(text)
-        print(actual_sentences)
+
+        self.assertEqual(len(actual_sentences), len(expected_sentences))
+
+        for actual, expected in zip(actual_sentences, expected_sentences):
+            self.assertEqual(actual, expected)
+
+    def test_gov_abbrev(self):
+        text = u"Our Gov. is a piece of shit.  He can't do anything right."
+
+        expected_sentences = [
+            "Our Gov. is a piece of shit.",
+            "He can't do anything right."
+        ]
+
+        actual_sentences = self.parser.sentences(text)
+
+        self.assertEqual(len(actual_sentences), len(expected_sentences))
+
+        for actual, expected in zip(actual_sentences, expected_sentences):
+            self.assertEqual(actual, expected)
+
+    def test_sgt_abbrev(self):
+        text = u"I was a Sgt. in the flying spaghetti monster army.  It was alright."
+
+        expected_sentences = [
+            "I was a Sgt. in the flying spaghetti monster army.",
+            "It was alright."
+        ]
+
+        actual_sentences = self.parser.sentences(text)
+
+        self.assertEqual(len(actual_sentences), len(expected_sentences))
+
+        for actual, expected in zip(actual_sentences, expected_sentences):
+            self.assertEqual(actual, expected)
+
+    def test_no_abbrev(self):
+        text = u"I'm No. 1 bitches.  Suck an egg."
+
+        expected_sentences = [
+            "I'm No. 1 bitches.",
+            "Suck an egg."
+        ]
+
+        actual_sentences = self.parser.sentences(text)
 
         self.assertEqual(len(actual_sentences), len(expected_sentences))
 
