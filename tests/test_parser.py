@@ -3,7 +3,7 @@ import os
 import unittest
 import requests
 
-from summarizer import Parser, sanitize
+from summarizer import Parser
 
 _dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "data")
 
@@ -25,7 +25,6 @@ class TestSentences(unittest.TestCase):
             art_jso = r.json()
 
             body = art_jso['body']
-            body = sanitize(body)
 
             actual_sentences = self.parser.sentences(body)
             expected_sentences = article['sentences']
