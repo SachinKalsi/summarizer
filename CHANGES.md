@@ -1,6 +1,11 @@
 CHANGES
 =======
 
+v0.0.6
+------
+
+* [FIX] Sgt, Gov, and No abbreviations accounted for
+
 v0.0.5 10-01-2015
 -----------------
 
