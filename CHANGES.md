@@ -6,6 +6,7 @@ v0.0.7
 
 * Added python 3.5 to travis
 * Moved `SentenceTokenizer` to its own file
+* Added `dept` to `abbrev_types`
 
 v0.0.6
 ------
