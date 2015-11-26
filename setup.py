@@ -41,7 +41,9 @@ setup(
         b'License :: OSI Approved :: MIT License',
         b'Natural Language :: English',
         b'Programming Language :: Python :: 2.7',
+        b'Programming Language :: Python :: 3.3',
         b'Programming Language :: Python :: 3.4',
+        b'Programming Language :: Python :: 3.5',
         b'Topic :: Text Editors :: Text Processing',
     ),
 )

@@ -6,7 +6,7 @@ Summarizer is an automatic summarization algorithm.
 Requirements
 ------------
 
-* Python 2.7, 3.3, or 3.4
+* Python 2.7, 3.3, 3.4, or 3.5
 * NLTK
 
 Install it

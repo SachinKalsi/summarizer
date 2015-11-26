@@ -1,6 +1,12 @@
 CHANGES
 =======
 
+v0.0.7
+------
+
+* Added python 3.5 to travis
+* Moved `SentenceTokenizer` to its own file
+
 v0.0.6
 ------
 
