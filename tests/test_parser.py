@@ -88,8 +88,8 @@ class TestSentences(unittest.TestCase):
         text = u"Our Gov. is a piece of shit.  He can't do anything right."
 
         expected_sentences = [
-            "Our Gov. is a piece of shit.",
-            "He can't do anything right."
+            u"Our Gov. is a piece of shit.",
+            u"He can't do anything right.",
         ]
 
         actual_sentences = self.parser.sentences(text)
@@ -103,8 +103,8 @@ class TestSentences(unittest.TestCase):
         text = u"I was a Sgt. in the flying spaghetti monster army.  It was alright."
 
         expected_sentences = [
-            "I was a Sgt. in the flying spaghetti monster army.",
-            "It was alright."
+            u"I was a Sgt. in the flying spaghetti monster army.",
+            u"It was alright.",
         ]
 
         actual_sentences = self.parser.sentences(text)
@@ -118,8 +118,24 @@ class TestSentences(unittest.TestCase):
         text = u"I'm No. 1 bitches.  Suck an egg."
 
         expected_sentences = [
-            "I'm No. 1 bitches.",
-            "Suck an egg."
+            u"I'm No. 1 bitches.",
+            u"Suck an egg.",
+        ]
+
+        actual_sentences = self.parser.sentences(text)
+
+        self.assertEqual(len(actual_sentences), len(expected_sentences))
+
+        for actual, expected in zip(actual_sentences, expected_sentences):
+            self.assertEqual(actual, expected)
+
+    def test_smartquote_ending_sentence(self):
+        text = u"And he says, ‘Oh, I’m going to get to?’ And I said, ‘Of course you are.’ And he says, ‘Well, good, that’s why I came to Michigan."
+
+        expected_sentences = [
+            u"And he says, ‘Oh, I’m going to get to?’",
+            u"And I said, ‘Of course you are.’",
+            u"And he says, ‘Well, good, that’s why I came to Michigan.",
         ]
 
         actual_sentences = self.parser.sentences(text)
