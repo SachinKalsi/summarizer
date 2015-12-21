@@ -53,10 +53,6 @@ class Summarizer(object):
             total_score = (title_feature * 1.5 + keyword_frequency * 2.0 + sentence_length * 0.5 + sentence_position * 1.0) / 4.0
 
             summaries.append({
-                # 'titleFeature': titleFeature,
-                # 'sentenceLength': sentenceLength,
-                # 'sentencePosition': sentencePosition,
-                # 'keywordFrequency': keywordFrequency,
                 'total_score': total_score,
                 'sentence': sentence,
                 'order': i
