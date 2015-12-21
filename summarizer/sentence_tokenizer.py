@@ -5,13 +5,13 @@ from nltk.tokenize import punkt
 class Language(punkt.PunktLanguageVars):
     """Used to realign punctuation that should be included in a sentence
     although it follows the period (or ?, !)."""
-    re_boundary_realignment = re.compile(u'["“”\')\]}]+?(?:\s+|(?=--)|$)', re.MULTILINE | re.UNICODE)
+    re_boundary_realignment = re.compile(u'["“”‘’\')\]}]+?(?:\s+|(?=--)|$)', re.MULTILINE | re.UNICODE)
 
     """Excludes some characters from starting word tokens"""
-    _re_word_start    = u"[^\(\"“”\`{\[:;&\#\*@\)}\]\-,]"
+    _re_word_start    = u"[^\(\"“”‘’\`{\[:;&\#\*@\)}\]\-,]"
 
     """Characters that cannot appear within words"""
-    _re_non_word_chars   = u"(?:[?!)\"“”;}\]\*:@\'\({\[])"
+    _re_non_word_chars   = u"(?:[?!)\"“”‘’;}\]\*:@\'\({\[])"
 
 class SentenceTokenizer(punkt.PunktSentenceTokenizer):
     """ Extend the nltk's punkt sentence tokenizer """
