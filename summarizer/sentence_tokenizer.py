@@ -37,7 +37,16 @@ class SentenceTokenizer(punkt.PunktSentenceTokenizer):
 
         tokens = self.annotate_multi_punct_words(tokens)
 
+        tokens = self.annotate_abbr_sentbreak_quote(tokens)
+
         return tokens
+
+    def annotate_abbr_sentbreak_quote(self, tokens):
+        """ Detect when an abbreviation ends a sentence and it proceeded by a quote.
+        EX: I live in the U.S. \"If you even care, which you probably do not.\"
+        """
+        for tok in tokens:
+            yield tok
 
     def annotate_multi_punct_words(self, tokens):
         """ Detect abbreviations with multiple periods and mark them as abbreviations.

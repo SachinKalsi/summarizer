@@ -160,6 +160,22 @@ class TestSentences(unittest.TestCase):
         for actual, expected in zip(actual_sentences, expected_sentences):
             self.assertEqual(actual, expected)
 
+    def test_quote_ending_sentence(self):
+        text = u'Ford also has said it will move production of the Ford Focus and Ford C-Max compact cars outside the U.S. "If the UAW represented a greater share of the U.S. auto industry, it would help them gain greater leverage at the bargaining table, but those gains would still be tempered by the global automotive competitive reality," Dziczek said.'
+
+        expected_sentences = [
+            u"Ford also has said it will move production of the Ford Focus and Ford C-Max compact cars outside the U.S.",
+            u'"If the UAW represented a greater share of the U.S. auto industry, it would help them gain greater leverage at the bargaining table, but those gains would still be tempered by the global automotive competitive reality," Dziczek said.',
+        ]
+
+        actual_sentences = self.parser.sentences(text)
+
+        self.assertEqual(len(actual_sentences), len(expected_sentences))
+
+        for actual, expected in zip(actual_sentences, expected_sentences):
+            self.assertEqual(actual, expected)
+
+
 if __name__ == '__main__':
     unittest.run(verbosity=2)
 
