@@ -10,7 +10,7 @@ class Summarizer(object):
 
     def get_summary(self, text, title):
         sentences = self.parser.sentences(text)
-        title_words = self.parser.remove_punctations(title)
+        title = self.parser.remove_punctations(title)
         title_words = self.parser.words(title)
         (keywords, word_count) = self.parser.get_keywords(text)
 
